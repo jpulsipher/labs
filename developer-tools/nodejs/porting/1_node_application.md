@@ -18,7 +18,7 @@ DELETE | /message/ID | delete message with ID
 
 ## Setup
 
-* Install Sails.js (it's to Node.js what RoR is to Ruby): ```sudo npm install sails -g``` (should install 0.12.3)
+* Install Sails.js (it's to Node.js what RoR is to Ruby): ```sudo npm install sails -g```
 * Create the  application:  ```sails new messageApp && cd messageApp```
 * Link application to local MongoDB
   * usage of sails-mongo orm: ```npm install sails-mongo --save```
@@ -27,18 +27,20 @@ DELETE | /message/ID | delete message with ID
 ```
 config/model.js:
 module.exports.models = {
-connection: 'mongo',
- migrate: 'safe'
+ migrate: 'safe',
+ attributes: {
+   id: { type: 'string', columnName: '_id' },
+ }
 };
 ```
 
 ```
-config/connections.js:
-module.exports.connections = {
-  mongo: {
-     adapter: 'sails-mongo',
-     url: process.env.MONGO_URL || 'mongodb://localhost/messageApp'
-  }
+config/datastores.js:
+module.exports.datastores = {
+  default: {
+   adapter: 'sails-mongo',
+   url: 'mongodb://root@localhost/messageApp'
+ }
 };
 ```
 
